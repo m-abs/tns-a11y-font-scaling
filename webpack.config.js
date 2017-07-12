@@ -25,7 +25,7 @@ module.exports = env => {
         vendor: `./vendor`,
 
         // Entry for stylesheet with global application styles
-        [mainSheet]: `./${mainSheet}`,
+        [mainSheet]: `./app.${platform}.css`,
     };
 
     const rules = getRules();
@@ -157,7 +157,7 @@ function getPlugins(platform, env) {
 
         // Copy assets to out dir. Add your own globs as needed.
         new CopyWebpackPlugin([
-            { from: mainSheet },
+            { from: "app." + platform + ".css", to: mainSheet },
             { from: "css/**" },
             { from: "fonts/**" },
             { from: "**/*.jpg" },
