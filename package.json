@@ -4,7 +4,10 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "dk.mavbs.a11yfontscaling"
+    "id": "dk.mavbs.a11yfontscaling",
+    "tns-ios": {
+      "version": "3.1.0"
+    }
   },
   "dependencies": {
     "@angular/animations": "~4.1.0",
