@@ -77,3 +77,136 @@ import '@nota/nativescript-accessibility-ext'; // <-- this line
 
 ![Scaled to 150pct](images/2-with-scaling.png)
 
+## Short explanation of how this works.
+
+**@nota/nativescript-accessibility-ext** adds a class to the current page according to the current scaling setting on the platform:
+- a11y-fontscale-50 (iOS only)
+- a11y-fontscale-70 (iOS only)
+- a11y-fontscale-85
+- a11y-fontscale-100
+- a11y-fontscale-115
+- a11y-fontscale-130
+- a11y-fontscale-150 (iOS only)
+- a11y-fontscale-200 (iOS only - extra large fonts)
+- a11y-fontscale-250 (iOS only - extra large fonts)
+- a11y-fontscale-300 (iOS only - extra large fonts)
+- a11y-fontscale-350 (iOS only - extra large fonts)
+- a11y-fontscale-400 (iOS only - extra large fonts)
+
+These classes are used to override the classes from **nativescript-theme-core** like this.
+
+```css
+Page.a11y-fontscale-150 {
+	.t-10 {
+    font-size: 15;
+  }
+}
+```
+
+This is done for all the CSS-classes in **nativescript-theme-core** which touches on font-size.
+
+# Adding your own scaling style
+
+If you use your own classes or you need to fix the layout when the text is scaled, you can easily do this yourself.
+
+## Enable listening for config changes on Android.
+
+If you need to do it on Android, you need to make a small change to your `app/App_Resources/Android/AndroidManifest.xml`.
+
+Simply add **fontScale** to the `android:configChanges` attribute on the `<activity>`.
+
+E.g. change:
+```
+	android:configChanges="keyboardHidden|orientation|screenSize"
+```
+To
+```
+	android:configChanges="keyboardHidden|orientation|screenSize|fontScale"
+```
+
+## Writing your own style
+
+Here I'll scale an image.
+
+Downloade the small image of [a cool fez](https://openclipart.org/detail/276028/fez-hat) and save it to `app/fezzes-are-cool.png`.
+
+Edit the file `app/_app-common.scss`.
+```scss
+@import '~@nota/nativescript-accessibility-ext/scss/fontscales';
+
+@each $scale, $scales in $a11y-font-scales {
+  $factor: map-get($scales, factor);
+
+  $base-size: 50;
+  Page.a11y-fontscale-#{$scale} {
+    .scaled-image {
+      height: $base-size * $factor;
+      width: $base-size * $factor;
+    }
+  }
+}
+```
+
+Edit the file `app/item/items.component.html`
+```html
+<ActionBar title="Details" class="action-bar"></ActionBar>
+<FlexboxLayout flexDirection="column" class="page">
+    <FlexboxLayout class="m-15">
+        <Label class="h2" [text]="item.id + '. '"></Label>
+        <Label class="h2" [text]="item.name"></Label>
+    </FlexboxLayout>
+    <Label class="h4" [text]="item.role"></Label>
+
+    <Image class="scaled-image" src="~/fezzes-are-cool.png"></Image> <!-- Add this line -->
+</FlexboxLayout>
+```
+
+Now if you run the app and change the scaling level, you'll see the image change size accordingly.
+
+## What about component styling.
+
+This is almost the same, you'll have to use the `/deep/` selector.
+
+And the SCSS will look like this:
+
+```scss
+@import '~@nota/nativescript-accessibility-ext/scss/fontscales';
+
+@each $scale, $scales in $a11y-font-scales {
+  $factor: map-get($scales, factor);
+
+  $base-size: 50;
+  /deep/ Page.a11y-fontscale-#{$scale} {
+    .scaled-image {
+      height: $base-size * $factor;
+      width: $base-size * $factor;
+    }
+  }
+}
+```
+
+## What if it only applies to one of the platforms.
+
+If it's a global style, you could add it to the `app/app.<platform>.scss` or you can use the `.ios`-class or `.android`-class like this:
+
+```scss
+@import '~@nota/nativescript-accessibility-ext/scss/fontscales';
+
+@each $scale, $scales in $a11y-font-scales {
+  $factor: map-get($scales, factor);
+
+  $base-size: 50;
+  /deep/ Page.a11y-fontscale-#{$scale} {
+    &.android {
+      .scaled-image {
+        height: $base-size * $factor;
+        width: $base-size * $factor;
+      }
+    }
+  }
+}
+```
+
+# Conclussion
+
+Supporting our visually impaired users is very easy with **@nota/nativescript-accessibility-ext**
