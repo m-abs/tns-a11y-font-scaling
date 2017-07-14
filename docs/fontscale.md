@@ -7,7 +7,7 @@ On Android the texts on labels and buttons is scaled automatically, we don't nee
 On iOS on the other hand doesn't scale the text automatically, on iOS 10+  *adjustsFontForContentSizeCategory* can be used on a UILabel to have it scaled.
 Unfortunately this only works for prefered fonts. which is difficult to set from NativeScript.
 
-Luckily **@nota/nativescript-accessiblity-ext** now supports font scaling via CSS.
+Luckily **@nota/nativescript-accessiblity-ext** just added supports font scaling via CSS.
 
 ## Getting started
 
@@ -65,40 +65,40 @@ Add this:
 ```typescript
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import '@nota/nativescript-accessibility-ext'; // <-- this line
+import '@nota/nativescript-accessibility-ext'; // <-- add this line
 ```
 
 ## Screenshots
 
-**Witout scaling/default scale level**
+**Text not scaled**
 ![Without scaling](images/1-without-scaling.png)
 
-**Scaled to 150%**
+**Text scaled to 150% of normal**
 
 ![Scaled to 150pct](images/2-with-scaling.png)
 
-## Short explanation of how this works.
+## How does this work?
 
-**@nota/nativescript-accessibility-ext** adds a class to the current page according to the current scaling setting on the platform:
-- a11y-fontscale-50 (iOS only)
-- a11y-fontscale-70 (iOS only)
+**@nota/nativescript-accessibility-ext** adds a class to the page matching the current font-scale setting:
+- a11y-fontscale-50 *(iOS only)*
+- a11y-fontscale-70 *(iOS only)*
 - a11y-fontscale-85
 - a11y-fontscale-100
 - a11y-fontscale-115
 - a11y-fontscale-130
-- a11y-fontscale-150 (iOS only)
-- a11y-fontscale-200 (iOS only - extra large fonts)
-- a11y-fontscale-250 (iOS only - extra large fonts)
-- a11y-fontscale-300 (iOS only - extra large fonts)
-- a11y-fontscale-350 (iOS only - extra large fonts)
-- a11y-fontscale-400 (iOS only - extra large fonts)
+- a11y-fontscale-150 *(iOS only)*
+- a11y-fontscale-200 *(iOS only - extra large fonts)*
+- a11y-fontscale-250 *(iOS only - extra large fonts)*
+- a11y-fontscale-300 *(iOS only - extra large fonts)*
+- a11y-fontscale-350 *(iOS only - extra large fonts)*
+- a11y-fontscale-400 *(iOS only - extra large fonts)*
 
 These classes are used to override the classes from **nativescript-theme-core** like this.
 
 ```css
 Page.a11y-fontscale-150 {
   .t-10 {
-    font-size: 15;
+    font-size: 15; /* 10 * 150% = 15 */
   }
 }
 ```
@@ -115,11 +115,11 @@ If you need to make adjustments on Android, you need to make a small change to y
 
 Add **fontScale** to the `android:configChanges`-attribute on the `<activity>`.
 
-E.g. change:
+The line:
 ```
 	android:configChanges="keyboardHidden|orientation|screenSize"
 ```
-To
+Becomes:
 ```
 	android:configChanges="keyboardHidden|orientation|screenSize|fontScale"
 ```
@@ -185,7 +185,7 @@ And the SCSS will look like this:
 }
 ```
 
-## What if it only applies to one of the platforms.
+## What if it only applies to one of the platforms?
 
 If it's a global style, you could add it to the `app/app.<platform>.scss` or you can use the `.ios`-class or `.android`-class like this:
 
@@ -197,7 +197,7 @@ If it's a global style, you could add it to the `app/app.<platform>.scss` or you
 
   $base-size: 50;
   /deep/ Page.a11y-fontscale-#{$scale} {
-    &.android {
+    &.android { /* <- here */
       .scaled-image {
         height: $base-size * $factor;
         width: $base-size * $factor;
@@ -209,4 +209,4 @@ If it's a global style, you could add it to the `app/app.<platform>.scss` or you
 
 # Conclussion
 
-Supporting our visually impaired users is very easy with **@nota/nativescript-accessibility-ext**
+Supporting our visually impaired users is very easy with **@nota/nativescript-accessibility-ext**.
