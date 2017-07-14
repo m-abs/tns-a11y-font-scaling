@@ -97,7 +97,7 @@ These classes are used to override the classes from **nativescript-theme-core** 
 
 ```css
 Page.a11y-fontscale-150 {
-	.t-10 {
+  .t-10 {
     font-size: 15;
   }
 }
@@ -111,9 +111,9 @@ If you use your own classes or you need to fix the layout when the text is scale
 
 ## Enable listening for config changes on Android.
 
-If you need to do it on Android, you need to make a small change to your `app/App_Resources/Android/AndroidManifest.xml`.
+If you need to make adjustments on Android, you need to make a small change to your `app/App_Resources/Android/AndroidManifest.xml`.
 
-Simply add **fontScale** to the `android:configChanges` attribute on the `<activity>`.
+Add **fontScale** to the `android:configChanges`-attribute on the `<activity>`.
 
 E.g. change:
 ```
