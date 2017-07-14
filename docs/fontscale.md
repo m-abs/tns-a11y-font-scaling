@@ -56,7 +56,7 @@ Now import the a11y-scss from **@nota/nativescript-accessiblity-ext**:
 
 Add this to `app/app.ios.scss`:
 ```sass
-@import '~@nota/nativescript-accessibility-ext/scss/a11y.ios.scss';
+@import '~@nota/nativescript-accessibility-ext/scss/a11y.ios';
 ```
 
 Now we need to load import the plugin in our `app/app.module.ts`
