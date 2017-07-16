@@ -70,11 +70,10 @@ import '@nota/nativescript-accessibility-ext'; // <-- add this line
 
 ## Screenshots
 
-**Text not scaled**
+**Text not scaled - iOS**
 ![Without scaling](images/1-without-scaling.png)
 
-**Text scaled to 150% of normal**
-
+**Text scaled to 150% of normal - iOS**
 ![Scaled to 150pct](images/2-with-scaling.png)
 
 ## How does this work?
@@ -184,6 +183,14 @@ And the SCSS will look like this:
   }
 }
 ```
+
+## Screenshots
+
+**Fez not scaled - Android**
+![Without scaling](images/3-android-no-font-scale.png)
+
+**Cool fez scaled 150% of normal - Android**
+![Scaled to 150pct](images/4-android-150pct-fontscale.png)
 
 ## What if it only applies to one of the platforms?
 
