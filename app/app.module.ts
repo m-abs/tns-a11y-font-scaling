@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import '@nota/nativescript-accessibility-ext';
+import 'nativescript-platform-css';
 import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 
